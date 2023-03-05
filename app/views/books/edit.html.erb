@@ -1,0 +1,11 @@
+<h1>Editing Book</h1>
+<%= form_with model: @book do |f| %>
+  <p><label for="inputTitle">Title</label></p>
+  <%= f.text_field :title, autofocus: true, id:"inputTitle" %>
+  <p><label for="inputOpinion">Opinion</label></p>
+  <%= f.text_area :body, autofocus: true, id:"inputOpinion" %>
+  <p><button type="Update Book" class="btn btn-primary bg-success">Update Book</button></p>
+<% end %>
+<span><%= link_to "Show", book_path(@book) %></span>
+<span>|</span>
+<span><%= link_to "Back", :back %></span>

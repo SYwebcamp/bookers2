@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container">
   <div class="row">
     <div class="col-md-4">
       <!--User info-->
@@ -17,22 +17,16 @@
                   <th><%= current_user.introduction %></th>
               </tr>
           </thead>
-          <% if current_user == current_user.id %>
             <th>
-              <%= link_to edit_user_path, class: "btn", method: :get do %>
-                 <span class="fas fa-user-cog"></span>
-              <% end %>
+            <%= link_to edit_user_path(current_user.id), class: "btn", method: :get do %>
+              <span class="fas fa-user-cog"></span>
             </th>
-          <% else %>
-            <th></th>
-          <% end %>
+            <% end %>
       </table>
       <!--New book-->
       <h1>New book</h1>
       <% if @book.errors.any? %>
-      <h2>
-        <%= @book.errors.count %>errors prohibited this obj from being saved:
-      </h2>
+        <%= @book.errors.count %>件のエラーが発生しました
         <ul>
           <% @book.errors.full_messages.each do |message| %>
             <li><%= message %></li>
@@ -45,31 +39,32 @@
             <%= f.text_field :title %>
           <h4>Opinion</h4>
             <%= f.text_area :body %>
-
           <p><button type="submit" class="btn btn-primary bg-success">Create Book</button></p>
         <% end %>
-    </div>
-    <div class="col-md-6 offset-md-2">
-      <!--Book show-->
-      <table class="table">
-        <h1>Books</h1>
-        <thead>
-          <tr>
-            <th class="image"></th>
-            <th class="title">Title</th>
-            <th class="opinion">Opinion</th>
-          </tr>
-        </thead>
-        <% @books.each do |book| %>
-        <tbody>
-          <tr>
-            <td><%= image_tag book.user.get_profile_image(100,100) %></td>
-            <td><%= link_to book.title, book_path(book.id) %></td>
-            <td><%= book.body %></td>
-          </tr>
-        </tbody>
-        <% end %>
-      </table>
+      </div>
+      <div class="col-md-6 offset-md-2">
+        <!--Book user index-->
+        <table class="table">
+          <h1>Users</h1>
+          <thead>
+            <tr>
+                <th class="image">Image</th>
+                <th class="naem">Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td>
+                  <%= image_tag user.get_profile_image(100,100) %>
+              </td>
+              <td><%= user.name %></td>
+              <td><%= link_to "show", user_path(user.id) %></td>
+            </tr>
+
+          <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>

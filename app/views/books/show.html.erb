@@ -1,10 +1,76 @@
-<div>
-  <%= image_tag @book.get_image %>
-  <p>投稿ユーザー画像:<%= image_tag @book.user.get_profile_image(100,100) %></p>
-  <p><%= @book.user.name %></p>
-  <p><%= @book.title %></p>
-  <p><%= @book.body %></p>
-  <% if @book.user == current_user %>
-    <%= link_to "Destroy", book_path(@book), method: :delete %>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <!--User info-->
+      <table class="table">
+          <h1>User info</h1>
+          <thead>
+              <tr>
+                  <th class="image"><%= image_tag @book.user.get_profile_image(100,100) %></</th>
+              </tr>
+              <tr>
+                  <th class="name">name</th>
+                  <th><%= @book.user.name %></th>
+              </tr>
+              <tr>
+                  <th class="introduction">introduction</th>
+                  <th><%= @book.user.introduction %></th>
+              </tr>
+          </thead>
+          <% if @book.user_id == current_user.id %>
+            <th>
+              <%= link_to edit_user_path, class: "btn", method: :get do %>
+                 <span class="fas fa-user-cog"></span>
+              <% end %>
+            </th>
+          <% else %>
+            <th></th>
+          <% end %>
+      </table>
+      <!--New book-->
+      <h1>New book</h1>
+      <% if @newbook.errors.any? %>
+        <%= @newbook.errors.count %>件のエラーが発生しました
+        <ul>
+          <% @newbook.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+        <%= form_with model: @newbook do |f| %>
+          <p>Title</p>
+            <%= f.text_field :title %>
+          <p>Opinion</p>
+            <%= f.text_area :body %>
+
+          <p><button type="submit" class="btn btn-primary bg-success">Create Book</button></p>
+        <% end %>
+    </div>
+    <div class="col-md-6 offset-md-2">
+      <!--Book detail-->
+      <table class="table">
+        <h1>Book detail</h1>
+        <tbody>
+          <tr>
+            <td>
+              <%= image_tag @book.user.get_profile_image(100,100) %>
+              <p><%= link_to @book.user.name, books_path(@book) %></p>
+            </td>
+            <td><%= @book.title %></td>
+            <td><%= @book.body %></td>
+
+            <% if @book.user == current_user %>
+            <td>
+              <%= link_to "Edit", edit_book_path(@book), class: "btn btn-primary bg-success", method: :get %>
+            </td>
+            <td>
+              <%= link_to "Destroy", book_path(@book), class: "btn btn-primary bg-danger", method: :delete %>
+            </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

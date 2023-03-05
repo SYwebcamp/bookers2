@@ -1,5 +1,25 @@
-<h1>welcome to<i class="fas fa-book"></i>Bookers!!</h1>
-<p>you can share and exchange your opinions, inpressions,and emotions</p>
-<p>about various books!</p>
-<%= link_to "Log in", new_user_session_path %>
-<%= link_to "Sign up", new_user_registration_path %>
+<header class="bg-dark"></header>
+<div class="top-title text-center">
+    <h1>welcome to <i class="fas fa-book"></i><strong>Bookers</strong>!!</h1>
+</div>
+
+<p class="text-center">In<i class="fas fa-book"></i><strong>Bookers</strong>,</p>
+
+<p class="text-center">you can share and exchange your opinions, inpressions,and emotions</p>
+<p class="text-center">about various books!</p>
+
+<div class="mx-auto" style="width:400px; ">
+    <div class="button pb-3">
+        <button type="button" class="btn btn-info w-100">
+            <%= link_to "Log in",new_user_session_path ,class:'btn-sm text-light' %>
+        </button>
+    </div>
+    <div class="button">
+        <button type="button" class="btn btn-success w-100 text-center">
+            <%= link_to "Sign up", new_user_registration_path ,class:'btn-sm text-light'%>
+        </button>
+    </div>
+</div>
+
+
+
