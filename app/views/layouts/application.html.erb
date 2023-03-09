@@ -13,10 +13,9 @@
 
   <body class="d-flex flex-column vh-100">
       <header class="shadow-sm">
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container">
-            <a class="navbar-brand p-3 text-white" href="/">Bookers</a>
+            <%= link_to "Bookers", root_path %>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,7 +24,7 @@
               <% if user_signed_in? %>
               <li class="nav-item">
                 <%= link_to user_path(current_user.id) ,class: "btn text-white", method: :get do%>
-                  <span class="fa fa-home home-btn"></span> Home
+                  <i class="fas fa-home"></i> Home
                 <% end %>
               </li>
               <li class="nav-item">
@@ -46,11 +45,11 @@
               <% else %>
               <li class="nav-item">
                 <%= link_to root_path, class: "btn text-white", method: :get do%>
-                  <span class="fa fa-home home-btn"></span> Home
+                  <i class="fas fa-home"></i> Home
                 <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to about_path, class: "btn text-white", method: :get do%>
+                <%= link_to home_about_path, class: "btn text-white", method: :get do%>
                   <span class="fas fa-link"></span> About
                 <% end %>
               </li>
@@ -71,7 +70,10 @@
         </nav>
       </header>
       <main class="mb-5">
-      <%= yield %>
+        <% flash.each do |message_type, message| %>
+          <%= content_tag(:div, message,  class: "alert alert-#{message_type}", role: "alert") %>
+        <% end %>
+        <%= yield %>
       </main>
       <footer class="text-center"><p>CopyRight Infratop.inc</p></footer>
     </body>

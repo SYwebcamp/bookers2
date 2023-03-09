@@ -1,4 +1,14 @@
 <div class="container">
+  <% if @book.errors.any? %>
+    <h2>
+      <%= @book.errors.count %>errors prohibited this obj from being saved:</br>
+    </h2>
+      <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+  <% end %>
   <div class="row">
       <!--User info-->
       <table class="table">
@@ -16,34 +26,20 @@
                   <th><%= @book.user.introduction %></th>
               </tr>
           </thead>
-          <% if @book.user_id == current_user.id %>
             <th>
-              <%= link_to edit_user_path, class: "btn", method: :get do %>
+              <%= link_to edit_user_path(@book.user.id), class: "btn", method: :get do %>
                  <span class="fas fa-user-cog"></span>
               <% end %>
             </th>
-          <% else %>
-            <th></th>
-          <% end %>
       </table>
       <!--New book-->
       <h1>New book</h1>
       <% if @book.errors.any? %>
-      <h2>
-        <%= @book.errors.count %>errors prohibited this obj from being saved:
-      </h2>
-        <ul>
-          <% @book.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      <% end %>
-
         <%= form_with model: @book do |f| %>
           <h4>Title</h4>
             <%= f.text_field :title %>
           <h4>Opinion</h4>
-            <%= f.text_area :body %>
+            <%= f.text_area :body, maxlength: "200" %>
 
           <p><button type="submit" class="btn btn-primary bg-success">Create Book</button></p>
         <% end %>

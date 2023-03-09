@@ -1,6 +1,17 @@
+
 <div class="container">
+  <% if @book.errors.any? %>
+    <h2>
+      <%= @book.errors.count %>errors prohibited this obj from being saved:</br>
+    </h2>
+      <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+  <% end %>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!--User info-->
         <table class="table table-hover">
             <h1>User info</h1>
@@ -17,37 +28,25 @@
                     <th><%= @user.introduction %></th>
                 </tr>
             </thead>
-          <% if @user.id == current_user.id %>
             <th>
-              <%= link_to edit_user_path, class: "btn mx-auto table-hover", method: :get do %>
+              <%= link_to edit_user_path(@user), class: "btn mx-auto table-hover" do %>
                 <span class="fas fa-user-cog"></span>
               <% end %>
             </th>
-          <% else %>
-            <th></th>
-          <% end %>
         </table>
 
         <!--New book-->
         <h1>New book</h1>
-        <% if @book.errors.any? %>
-          <%= @book.errors.count %>件のエラーが発生しました
-          <ul>
-            <% @book.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        <% end %>
 
         <%= form_with model: @book do |f| %>
           <h4>Title</h4>
             <%= f.text_field :title %>
           <h4>Opinion</h4>
-            <%= f.text_area :body %>
+            <%= f.text_area :body, maxlength: "200" %>
           <p><button type="submit" class="btn btn-primary bg-success">Create Book</button></p>
         <% end %>
     </div>
-    <div class="col-md-6 offset-md-2">
+    <div class="col-md-8 offset-md-1">
       <!--Book show-->
       <%= render 'books/list', books: @books %>
     </div>
